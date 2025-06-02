@@ -17,9 +17,6 @@ app.MapGet("/", async (MoviesService moviesService) => {
 });
 
 app.MapGet("/api/movies", async (MoviesService moviesService) => {
-
-    Console.WriteLine("im here");
-
     string value = redis.StringGet("movies");
     if (string.IsNullOrEmpty(value))
     {
@@ -29,8 +26,6 @@ app.MapGet("/api/movies", async (MoviesService moviesService) => {
 
         return movies.Count > 0 ? Results.Ok(movies) : Results.NoContent();
     }
-
-    Console.WriteLine(value);
 
     var cachedMovies = JsonConvert.DeserializeObject<List<Movie>>(value);
     if (cachedMovies != null && cachedMovies.Count > 0)
